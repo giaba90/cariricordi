@@ -1,5 +1,4 @@
-.nome,.cognome,.nascita,.morte,.dedica-personalizzata{display: none;}
-
+.nome,.cognome,.nascita,.morte,.suggerimenti-dedica,.dedica-personalizzata,.suggerimento-sfondo,input.wcj_product_input_fields,label[for="wcj_product_input_fields_local_1"]{display: none;}
 
 .block {
   max-width: 400px;
