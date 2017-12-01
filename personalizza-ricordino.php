@@ -65,16 +65,16 @@ function action_cart_calculate_totals() {
 
       if($cart_item['product_id'] == 83 && $cart_item['quantity'] == 30){
            ## Displayed subtotal
-            WC()->cart->subtotal_ex_tax = 58.50;
+            WC()->cart->subtotal_ex_tax += 58.50;
 
-            WC()->cart->total = 58.50;
+            WC()->cart->total += 58.50;
 
     }elseif ($cart_item['product_id'] == 83 && $cart_item['quantity'] > 30) {
            $q =  $cart_item['quantity'] - 30;
           ## Displayed subtotal
-            WC()->cart->subtotal_ex_tax = ($q*1.5) + 58.50;
+            WC()->cart->subtotal_ex_tax += ($q*1.5) + 58.50;
 
-            WC()->cart->total = ($q*1.5) + 58.50;
+            WC()->cart->total += ($q*1.5) + 58.50;
         }
         else{
           WC()->cart->total += 6;
