@@ -1,5 +1,5 @@
-document.querySelectorAll('p.price')[0].children[0].innerText="€35";
-document.querySelectorAll('p.price')[1].children[0].innerText="€35";
+//document.querySelectorAll('p.price')[0].children[0].innerText="€58.50";
+document.querySelectorAll('p.price')[1].children[0].innerText="€58.50";
 
 var nome = document.getElementById('inserisci-nome');
 nome.onchange = function(){
@@ -98,19 +98,14 @@ var qty = document.querySelector('input.input-text.qty.text');
 qty.onchange = function(){
 	v = document.querySelector('input.input-text.qty.text').value;
 	v = parseInt(v);
-	if(v > 10 && v <= 50 ){
-		q = v - 10;
-		document.querySelectorAll('p.price')[0].children[0].innerText="€"+((2.50*q)+35);
-		document.querySelectorAll('p.price')[1].children[0].innerText="€"+((2.50*q)+35);
+	if(v == 30){
+	//	document.querySelectorAll('p.price')[0].children[0].innerText="€58.50";
+		document.querySelectorAll('p.price')[1].children[0].innerText="€58.50";
 	}
-	else if(v > 50){
-		q = v - 50;
-		document.querySelectorAll('p.price')[0].children[0].innerText="€"+((2.00*q)+135);
-		document.querySelectorAll('p.price')[1].children[0].innerText="€"+((2.00*q)+135);
-	}
-	else{
-		document.querySelectorAll('p.price')[0].children[0].innerText="€"+3.50*v;
-		document.querySelectorAll('p.price')[1].children[0].innerText="€"+3.50*v;
+	else if(v > 30){
+		q = v - 30;
+	//	document.querySelectorAll('p.price')[0].children[0].innerText="€"+((1.50*q)+58.50);
+		document.querySelectorAll('p.price')[1].children[0].innerText="€"+((1.50*q)+58.50);
 	}
 };
 
