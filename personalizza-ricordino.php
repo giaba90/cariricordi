@@ -4,7 +4,7 @@
 Plugin Name: Personalizza ricordino
 Plugin URI: http://github.com/giaba90
 Description: Un plugin contenente alcune regole per personalizzare il ricordino
-Version: 1.0
+Version: 1.2
 Author: Gianluca Barranca
 Author URI: http://www.gianlucabarranca.it
 License: GPL2
@@ -61,6 +61,10 @@ function action_cart_calculate_totals() {
 
     if ( is_admin() && ! defined( 'DOING_AJAX' ) )
         return;
+
+    WC()->cart->subtotal_ex_tax = 0;
+
+    WC()->cart->total = 0;
     foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
 
       if($cart_item['product_id'] == 83 && $cart_item['quantity'] == 30){
@@ -77,8 +81,12 @@ function action_cart_calculate_totals() {
             WC()->cart->total += ($q*1.5) + 58.50;
         }
         else{
-          WC()->cart->total += 6;
+          WC()->cart->subtotal_ex_tax +=$cart_item['quantity']* 0.89;
+      //    WC()->cart->total += $cart_item['quantity']* 0.89;
+          WC()->cart->total = WC()->cart->subtotal_ex_tax+6;
+          //calculate tax 22%
           $tax = (WC()->cart->total * 22)/100;
+          //add tax to total
           WC()->cart->total +=$tax;
         }
   }
