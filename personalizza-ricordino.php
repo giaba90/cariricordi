@@ -51,13 +51,12 @@ else{
 }
 
 /**
- * Funzione per prezzo custom basato sulle quantità
+* Funzione per prezzo custom basato sulle quantità
 */
 
 //woocommerce_cart_totals_after_order_total
 add_action( 'woocommerce_after_calculate_totals', 'action_cart_calculate_totals', 10, 0 );
 function action_cart_calculate_totals() {
-
 
     if ( is_admin() && ! defined( 'DOING_AJAX' ) )
         return;
@@ -72,8 +71,8 @@ function action_cart_calculate_totals() {
             WC()->cart->subtotal_ex_tax += 58.50;
 
             WC()->cart->total += 58.50;
-
     }elseif ($cart_item['product_id'] == 83 && $cart_item['quantity'] > 30) {
+
            $q =  $cart_item['quantity'] - 30;
           ## Displayed subtotal
             WC()->cart->subtotal_ex_tax += ($q*1.5) + 58.50;
@@ -81,19 +80,22 @@ function action_cart_calculate_totals() {
             WC()->cart->total += ($q*1.5) + 58.50;
         }
         else{
-          WC()->cart->subtotal_ex_tax +=$cart_item['quantity']* 0.89;
-      //    WC()->cart->total += $cart_item['quantity']* 0.89;
-          WC()->cart->total = WC()->cart->subtotal_ex_tax+6;
-          //calculate tax 22%
-          $tax = (WC()->cart->total * 22)/100;
-          //add tax to total
-          WC()->cart->total +=$tax;
+          WC()->cart->subtotal_ex_tax +=($cart_item['quantity']* 0.89);
+
         }
   }
+  //calculate tax if in the cart there is a simple product
+  foreach( WC()->cart->get_cart() as $cart_item ){$product_id = $cart_item['product_id'];break;}
+  if($product_id == 112)
+    {
+        WC()->cart->subtotal_ex_tax+=6.85;
+        WC()->cart->total = WC()->cart->subtotal_ex_tax;
+      //calculate tax 22%
+        $tax = (WC()->cart->total * 22)/100;
+      //add tax to total
+        WC()->cart->total +=$tax;
+    }
 }
-
-
-
 
 /**
 * Filtro per cambiare il prezzo mostrato nel carrello
@@ -102,7 +104,6 @@ add_filter( 'woocommerce_cart_item_subtotal', 'change_cart_item_subtotal', 10, 3
 function change_cart_item_subtotal( $subtotal, $cart_item, $cart_item_key ) {
 
     if ($cart_item['product_id'] == 83 && $cart_item['quantity'] == 30 ) {
-      //  $q =  $cart_item['quantity'] - 10;
         $price = 58.50;
         $subtotal = '<span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">€</span>'. sprintf("%.2f", $price) .'</span>';
     }
@@ -110,6 +111,9 @@ function change_cart_item_subtotal( $subtotal, $cart_item, $cart_item_key ) {
       $q =  $cart_item['quantity'] - 30;
       $price = ($q*1.5) + 58.50;
       $subtotal = '<span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">€</span>'. sprintf("%.2f", $price) .'</span>';
+    }
+    elseif($cart_item['product_id'] == 112){
+      $subtotal.= '<span> (iva esclusa)</span>';
     }
 
     return $subtotal;
